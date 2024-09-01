@@ -7,6 +7,8 @@
       <module fileurl="file://$PROJECT_DIR$/DesafioControleFluxo/DesafioControleFluxo.iml" filepath="$PROJECT_DIR$/DesafioControleFluxo/DesafioControleFluxo.iml" />
       <module fileurl="file://$PROJECT_DIR$/DesafioControleFluxo2/DesafioControleFluxo2.iml" filepath="$PROJECT_DIR$/DesafioControleFluxo2/DesafioControleFluxo2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/JavaDio.iml" filepath="$PROJECT_DIR$/.idea/JavaDio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProjetoIphone/ProjetoIphone.iml" filepath="$PROJECT_DIR$/ProjetoIphone/ProjetoIphone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProjetoIphoneDinamico/ProjetoIphoneDinamico.iml" filepath="$PROJECT_DIR$/ProjetoIphoneDinamico/ProjetoIphoneDinamico.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartTv/SmartTv.iml" filepath="$PROJECT_DIR$/SmartTv/SmartTv.iml" />
     </modules>
   </component>

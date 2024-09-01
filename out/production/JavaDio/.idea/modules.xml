@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Candidatos/Candidatos.iml" filepath="$PROJECT_DIR$/Candidatos/Candidatos.iml" />
       <module fileurl="file://$PROJECT_DIR$/ContaBanco/ContaBanco.iml" filepath="$PROJECT_DIR$/ContaBanco/ContaBanco.iml" />
       <module fileurl="file://$PROJECT_DIR$/DesafioControleFluxo/DesafioControleFluxo.iml" filepath="$PROJECT_DIR$/DesafioControleFluxo/DesafioControleFluxo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DesafioControleFluxo2/DesafioControleFluxo2.iml" filepath="$PROJECT_DIR$/DesafioControleFluxo2/DesafioControleFluxo2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/JavaDio.iml" filepath="$PROJECT_DIR$/.idea/JavaDio.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartTv/SmartTv.iml" filepath="$PROJECT_DIR$/SmartTv/SmartTv.iml" />
     </modules>
