@@ -1,8 +1,12 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Phone {
 
     private Iphone iphone1;
+    private ArrayList<String> musicas;
+    private ArrayList<String> artistas;
+    private ArrayList<String> albuns;
 
     public iPhone1() {
         iphone1 = new Iphone();
@@ -11,13 +15,13 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
         iphone1.setEndereco("Rua Chinforínfora, Tangamandápio-TA");
         iphone1.setDocumento("3333.3333.333-33");
 
-        iphone1.setAlbum("... And Justice For All");
-        iphone1.setArtista("Metallica");
-        iphone1.setMusica("Blackened");
-
         iphone1.setNavegador("Opera");
 
-        inserirNovoContato("Pai 45544-12521");
+        musicas = new ArrayList<>();
+        artistas = new ArrayList<>();
+        albuns = new ArrayList<>();
+
+        adicionarMusica("Blackened", "Metallica", "... And Justice For All");
     }
 
     public static void main(String[] args) {
@@ -33,7 +37,7 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
 
             switch (command) {
                 case "musica":
-                    System.out.println("Digite o comando do reprodutor (tocar, pausar, selecionar):");
+                    System.out.println("Digite o comando do reprodutor (tocar, pausar, selecionar, nova musica):");
                     String musicaCommand = scanner.nextLine().toLowerCase();
                     switch (musicaCommand) {
                         case "tocar":
@@ -43,9 +47,20 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
                             iphone1Instance.pausar();
                             break;
                         case "selecionar":
+                            iphone1Instance.exibirMusicas();
+                            System.out.println("Digite o número da música que deseja tocar:");
+                            int index = scanner.nextInt();
+                            scanner.nextLine(); // Para consumir a nova linha após o nextInt()
+                            iphone1Instance.selecionarMusica(index - 1);
+                            break;
+                        case "nova musica":
                             System.out.println("Digite o nome da música:");
                             String novaMusica = scanner.nextLine();
-                            iphone1Instance.selecionarMusica(novaMusica);
+                            System.out.println("Digite o nome do artista:");
+                            String novoArtista = scanner.nextLine();
+                            System.out.println("Digite o nome do álbum:");
+                            String novoAlbum = scanner.nextLine();
+                            iphone1Instance.adicionarMusica(novaMusica, novoArtista, novoAlbum);
                             break;
                         default:
                             System.out.println("Comando de música não reconhecido.");
@@ -121,7 +136,7 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
 
     @Override
     public void tocar() {
-        System.out.println("Tocando a música: " + iphone1.getMusica());
+        System.out.println("Tocando a música: " + iphone1.getMusica() + " do artista " + iphone1.getArtista() + " no álbum " + iphone1.getAlbum());
         System.out.println();
     }
 
@@ -132,9 +147,27 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
     }
 
     @Override
-    public void selecionarMusica(String musica) {
-        iphone1.setMusica(musica);
-        System.out.println("Música selecionada: " + iphone1.getMusica());
+    public void selecionarMusica(int index) {
+        iphone1.setMusica(musicas.get(index));
+        iphone1.setArtista(artistas.get(index));
+        iphone1.setAlbum(albuns.get(index));
+        System.out.println("Música selecionada: " + iphone1.getMusica() + " do artista " + iphone1.getArtista() + " no álbum " + iphone1.getAlbum());
+        System.out.println();
+    }
+
+    public void exibirMusicas() {
+        System.out.println("Músicas disponíveis:");
+        for (int i = 0; i < musicas.size(); i++) {
+            System.out.println((i + 1) + ". " + musicas.get(i) + " - " + artistas.get(i) + " (" + albuns.get(i) + ")");
+        }
+        System.out.println();
+    }
+
+    public void adicionarMusica(String musica, String artista, String album) {
+        musicas.add(musica);
+        artistas.add(artista);
+        albuns.add(album);
+        System.out.println("Nova música adicionada: " + musica + " do artista " + artista + " no álbum " + album);
         System.out.println();
     }
 
