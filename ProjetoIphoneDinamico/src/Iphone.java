@@ -12,8 +12,8 @@ public class Iphone {
 
     private String navegador;
 
-
-    void exibirDadosPessoais(){
+    // Exibe dados pessoais do dono do iPhone
+    public void exibirDadosPessoais() {
         System.out.println("Este iPhone pertence a " + dono);
         System.out.println("Endereço: " + endereco);
         System.out.println("E-mail: " + email);
@@ -21,26 +21,23 @@ public class Iphone {
         System.out.println();
     }
 
+    // Getters e Setters
     public void setDono(String dono) {
         this.dono = dono;
     }
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public void setDocumento(String documento) {
         this.documento = documento;
     }
 
-
     public String getArtista() {
         return artista;
     }
-
     public void setArtista(String artista) {
         this.artista = artista;
     }
@@ -48,7 +45,6 @@ public class Iphone {
     public String getMusica() {
         return musica;
     }
-
     public void setMusica(String musica) {
         this.musica = musica;
     }
@@ -56,7 +52,6 @@ public class Iphone {
     public String getAlbum() {
         return album;
     }
-
     public void setAlbum(String album) {
         this.album = album;
     }
@@ -64,7 +59,6 @@ public class Iphone {
     public String getContato() {
         return contato;
     }
-
     public void setContato(String contato) {
         this.contato = contato;
     }
@@ -72,8 +66,8 @@ public class Iphone {
     public String getNavegador() {
         return navegador;
     }
-
     public void setNavegador(String navegador) {
         this.navegador = navegador;
     }
+
 }

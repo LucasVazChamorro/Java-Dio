@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/ProjetoIphone/ProjetoIphone.iml" filepath="$PROJECT_DIR$/ProjetoIphone/ProjetoIphone.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProjetoIphoneDinamico/ProjetoIphoneDinamico.iml" filepath="$PROJECT_DIR$/ProjetoIphoneDinamico/ProjetoIphoneDinamico.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartTv/SmartTv.iml" filepath="$PROJECT_DIR$/SmartTv/SmartTv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/collections-java-api-2023/collections-java-api-2023.iml" filepath="$PROJECT_DIR$/collections-java-api-2023/collections-java-api-2023.iml" />
     </modules>
   </component>
 </project>

@@ -7,21 +7,37 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
     private ArrayList<String> musicas;
     private ArrayList<String> artistas;
     private ArrayList<String> albuns;
+    private ArrayList<String> contatos;
 
     public iPhone1() {
+        Scanner scanner = new Scanner(System.in);
         iphone1 = new Iphone();
-        iphone1.setDono("Lucas Chamorro");
-        iphone1.setEmail("lucasvazchamorro7@gmail.com");
-        iphone1.setEndereco("Rua Chinforínfora, Tangamandápio-TA");
-        iphone1.setDocumento("3333.3333.333-33");
 
-        iphone1.setNavegador("Opera");
+        System.out.println("Informe o dono do iPhone: ");
+        String dono = scanner.nextLine();
+        iphone1.setDono(dono);
+        System.out.println("Informe o email: ");
+        String email = scanner.nextLine();
+        iphone1.setEmail(email);
+        System.out.println("Informe o endereço: ");
+        String endereco = scanner.nextLine();
+        iphone1.setEndereco(endereco);
+        System.out.println("Informe o documento: ");
+        String documento = scanner.nextLine();
+        iphone1.setDocumento(documento);
 
         musicas = new ArrayList<>();
         artistas = new ArrayList<>();
         albuns = new ArrayList<>();
+        contatos = new ArrayList<>();
 
-        adicionarMusica("Blackened", "Metallica", "... And Justice For All");
+        //Iniciando as listas de músicas e contatos apenas para se ter algo no dispositivo...
+        musicas.add("Blackened");
+        artistas.add("Metallica");
+        albuns.add("... And Justice For All");
+
+        contatos.add("João - 123456789");
+        contatos.add("Maria - 987654321");
     }
 
     public static void main(String[] args) {
@@ -29,32 +45,43 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
         iphone1Instance.iphone1.exibirDadosPessoais();
 
         Scanner scanner = new Scanner(System.in);
-        String command;
+        int command = 0;
 
         do {
-            System.out.println("Digite um comando (musica, telefonar, navegar, sair):");
-            command = scanner.nextLine().toLowerCase();
+            System.out.println("Selecione a opção desejada:\n" +
+                    "[ 1 ] = Musica\n" +
+                    "[ 2 ] = Telefonar\n" +
+                    "[ 3 ] = Navegar\n" +
+                    "[ 4 ] = Sair:\n");
+
+            command = scanner.nextInt();
+            scanner.nextLine();
 
             switch (command) {
-                case "musica":
-                    System.out.println("Digite o comando do reprodutor (tocar, pausar, selecionar, nova musica):");
-                    String musicaCommand = scanner.nextLine().toLowerCase();
+                case 1:
+                    System.out.println("Informe a opção desejada: \n" +
+                            "[ 1 ] - Selecionar Música\n" +
+                            "[ 2 ] - Tocar Música Selecionada\n" +
+                            "[ 3 ] - Pausar Música\n" +
+                            "[ 4 ] - Adicionar Música\n");
+                    int musicaCommand = scanner.nextInt();
                     switch (musicaCommand) {
-                        case "tocar":
-                            iphone1Instance.tocar();
-                            break;
-                        case "pausar":
-                            iphone1Instance.pausar();
-                            break;
-                        case "selecionar":
+                        case 1:
                             iphone1Instance.exibirMusicas();
                             System.out.println("Digite o número da música que deseja tocar:");
                             int index = scanner.nextInt();
-                            scanner.nextLine(); // Para consumir a nova linha após o nextInt()
+                            scanner.nextLine();  // Consumir nova linha
                             iphone1Instance.selecionarMusica(index - 1);
                             break;
-                        case "nova musica":
+                        case 2:
+                            iphone1Instance.tocar();
+                            break;
+                        case 3:
+                            iphone1Instance.pausar();
+                            break;
+                        case 4:
                             System.out.println("Digite o nome da música:");
+                            scanner.nextLine();  // Consumir nova linha
                             String novaMusica = scanner.nextLine();
                             System.out.println("Digite o nome do artista:");
                             String novoArtista = scanner.nextLine();
@@ -63,65 +90,84 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
                             iphone1Instance.adicionarMusica(novaMusica, novoArtista, novoAlbum);
                             break;
                         default:
-                            System.out.println("Comando de música não reconhecido.");
+                            System.out.println("Opção inválida!");
                     }
                     break;
 
-                case "telefonar":
-                    System.out.println("Digite o comando de telefonia (ligar, atender, correio, novo contato):");
-                    String telefonarCommand = scanner.nextLine().toLowerCase();
+                case 2:
+                    System.out.println("Informe a opção desejada:\n" +
+                            "[ 1 ] = Ligar\n" +
+                            "[ 2 ] = Atender\n" +
+                            "[ 3 ] = Correio Eletrônico\n" +
+                            "[ 4 ] = Adicionar Contato\n" +
+                            "[ 5 ] = Ver lista de Contatos\n");
+
+                    int telefonarCommand = scanner.nextInt();
                     switch (telefonarCommand) {
-                        case "ligar":
+                        case 1:
                             iphone1Instance.ligar();
                             break;
-                        case "atender":
+                        case 2:
                             iphone1Instance.atender();
                             break;
-                        case "correio":
+                        case 3:
                             iphone1Instance.iniciarCorreioVoz();
                             break;
-                        case "novo contato":
+                        case 4:
                             System.out.println("Digite o nome do contato:");
+                            scanner.nextLine();  // Consumir nova linha
                             String nomeContato = scanner.nextLine();
                             System.out.println("Digite o número do contato:");
                             String numeroContato = scanner.nextLine();
-                            iphone1Instance.inserirNovoContato(nomeContato + " " + numeroContato);
+                            iphone1Instance.inserirNovoContato(nomeContato + " - " + numeroContato);
+                            break;
+                        case 5:
+                            iphone1Instance.exibirContatos();
+                            System.out.println("Digite o número do contato que deseja ligar:");
+                            int contatoIndex = scanner.nextInt();
+                            scanner.nextLine();  // Consumir nova linha
+                            iphone1Instance.selecionarContato(contatoIndex - 1);
                             break;
                         default:
-                            System.out.println("Comando de telefonia não reconhecido.");
+                            System.out.println("Opção inválida!");
                     }
                     break;
 
-                case "navegar":
-                    System.out.println("Digite o comando de navegação (exibir, nova aba, atualizar):");
-                    String navegarCommand = scanner.nextLine().toLowerCase();
+                case 3:
+                    System.out.println("Informe a opção desejada:\n" +
+                            "[ 1 ] = Exibir\n" +
+                            "[ 2 ] = Nova Aba\n" +
+                            "[ 3 ] = Atualizar Página\n");
+                    int navegarCommand = scanner.nextInt();
                     switch (navegarCommand) {
-                        case "exibir":
+                        case 1:
                             System.out.println("Digite o URL da página:");
+                            scanner.nextLine();  // Consumir nova linha
                             String url = scanner.nextLine();
                             iphone1Instance.exibirPagina(url);
                             break;
-                        case "nova aba":
+                        case 2:
                             System.out.println("Digite o URL da nova aba:");
+                            scanner.nextLine();  // Consumir nova linha
                             String novaAbaUrl = scanner.nextLine();
                             iphone1Instance.adicionarNovaAba(novaAbaUrl);
                             break;
-                        case "atualizar":
+                        case 3:
                             iphone1Instance.atualizarPagina();
                             break;
                         default:
-                            System.out.println("Comando de navegação não reconhecido.");
+                            System.out.println("Opção inválida!");
                     }
                     break;
 
-                case "sair":
+                case 4:
                     System.out.println("Encerrando o programa.");
                     break;
 
                 default:
-                    System.out.println("Comando não reconhecido.");
+                    System.out.println("Opção inválida.");
             }
-        } while (!command.equals("sair"));
+        } while (command != 4);
 
         scanner.close();
     }
@@ -152,6 +198,7 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
         iphone1.setArtista(artistas.get(index));
         iphone1.setAlbum(albuns.get(index));
         System.out.println("Música selecionada: " + iphone1.getMusica() + " do artista " + iphone1.getArtista() + " no álbum " + iphone1.getAlbum());
+        tocar();
         System.out.println();
     }
 
@@ -159,8 +206,8 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
         System.out.println("Músicas disponíveis:");
         for (int i = 0; i < musicas.size(); i++) {
             System.out.println((i + 1) + ". " + musicas.get(i) + " - " + artistas.get(i) + " (" + albuns.get(i) + ")");
+            System.out.println();
         }
-        System.out.println();
     }
 
     public void adicionarMusica(String musica, String artista, String album) {
@@ -171,8 +218,22 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
         System.out.println();
     }
 
-    @Override
-    public void Telefonar() {
+    public void exibirContatos() {
+        System.out.println("Contatos disponíveis:");
+        for (int i = 0; i < contatos.size(); i++) {
+            System.out.println((i + 1) + ". " + contatos.get(i));
+            System.out.println();
+        }
+    }
+
+    public void inserirNovoContato(String novoContato) {
+        contatos.add(novoContato);
+        System.out.println("Novo contato inserido: " + novoContato);
+        System.out.println();
+    }
+
+    public void selecionarContato(int index) {
+        iphone1.setContato(contatos.get(index));
         System.out.println("Ligando para " + iphone1.getContato() + "...");
         System.out.println();
     }
@@ -197,8 +258,7 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
 
     @Override
     public void navegadarInternet() {
-        System.out.println("Abrindo navegador " + iphone1.getNavegador());
-        System.out.println();
+
     }
 
     @Override
@@ -216,12 +276,6 @@ public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Pho
     @Override
     public void atualizarPagina() {
         System.out.println("Atualizando página.");
-        System.out.println();
-    }
-
-    public void inserirNovoContato(String novoContato) {
-        iphone1.setContato(novoContato);
-        System.out.println("Novo contato inserido: " + iphone1.getContato());
         System.out.println();
     }
 }
