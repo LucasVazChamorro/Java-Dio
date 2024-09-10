@@ -22,5 +22,5 @@ https://github.com/LucasVazChamorro/Java-Dio/tree/Iphone/DesafioControleFluxo2
 Criação de um projeto que represente os papéis do iPhone, contendo Reprodução Musical, Aparelho telefônico e Navegador de Internet:
 https://github.com/LucasVazChamorro/Java-Dio/tree/ProjetoIphone/ProjetoIphone/src
 
-Mesmo projeto, mas com a inclusão da funcionalidade Scanner, deixando o projeto mais dinâmico:
-https://github.com/LucasVazChamorro/Java-Dio/tree/ProjetoIphone/ProjetoIphoneDinamico/src
+Mesmo projeto, mas com a inclusão da funcionalidade Scanner, deixando o projeto mais dinâmico (Para quem chegou do linkedin, os códigos informados no vídeos podem ser acessados no link abaixo):
+https://github.com/LucasVazChamorro/Java-Dio/tree/main/ProjetoIphoneDinamico/src
