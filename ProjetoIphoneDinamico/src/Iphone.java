@@ -4,70 +4,55 @@ public class Iphone {
     private String email;
     private String documento;
 
-    private String artista;
-    private String musica;
-    private String album;
+    // Construtor
+    public Iphone() {
+        this.dono = "";
+        this.endereco = "";
+        this.email = "";
+        this.documento = "";
+    }
 
-    private String contato;
-
-    private String navegador;
-
-    // Exibe dados pessoais do dono do iPhone
+    // Método para exibir dados pessoais
     public void exibirDadosPessoais() {
-        System.out.println("Este iPhone pertence a " + dono);
+        System.out.println("------------------------------------");
+        System.out.println("Dados do Proprietário do iPhone:");
+        System.out.println("Nome: " + dono);
         System.out.println("Endereço: " + endereco);
         System.out.println("E-mail: " + email);
         System.out.println("Documento: " + documento);
-        System.out.println();
+        System.out.println("------------------------------------");
     }
 
     // Getters e Setters
+    public String getDono() {
+        return dono;
+    }
+
     public void setDono(String dono) {
         this.dono = dono;
     }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getDocumento() {
+        return documento;
+    }
+
     public void setDocumento(String documento) {
         this.documento = documento;
     }
-
-    public String getArtista() {
-        return artista;
-    }
-    public void setArtista(String artista) {
-        this.artista = artista;
-    }
-
-    public String getMusica() {
-        return musica;
-    }
-    public void setMusica(String musica) {
-        this.musica = musica;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public String getContato() {
-        return contato;
-    }
-    public void setContato(String contato) {
-        this.contato = contato;
-    }
-
-    public String getNavegador() {
-        return navegador;
-    }
-    public void setNavegador(String navegador) {
-        this.navegador = navegador;
-    }
-
 }

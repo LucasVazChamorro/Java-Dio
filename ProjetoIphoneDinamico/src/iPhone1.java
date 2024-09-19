@@ -2,280 +2,450 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class iPhone1 extends Iphone implements MusicPlayer, InternetBrowser, Phone {
-
-    private Iphone iphone1;
     private ArrayList<String> musicas;
     private ArrayList<String> artistas;
     private ArrayList<String> albuns;
     private ArrayList<String> contatos;
+    private String musicaAtual;
+    private String paginaAtual;
+    private boolean tocando;
+    private boolean emChamada;
 
     public iPhone1() {
-        Scanner scanner = new Scanner(System.in);
-        iphone1 = new Iphone();
+        super();
+        initializeLists();
+        musicaAtual = "";
+        paginaAtual = "";
+        tocando = false;
+        emChamada = false;
+        coletarInformacoesDono();
+    }
 
-        System.out.println("Informe o dono do iPhone: ");
-        String dono = scanner.nextLine();
-        iphone1.setDono(dono);
-        System.out.println("Informe o email: ");
-        String email = scanner.nextLine();
-        iphone1.setEmail(email);
-        System.out.println("Informe o endereço: ");
-        String endereco = scanner.nextLine();
-        iphone1.setEndereco(endereco);
-        System.out.println("Informe o documento: ");
-        String documento = scanner.nextLine();
-        iphone1.setDocumento(documento);
-
+    private void initializeLists() {
         musicas = new ArrayList<>();
         artistas = new ArrayList<>();
         albuns = new ArrayList<>();
         contatos = new ArrayList<>();
+    }
 
-        //Iniciando as listas de músicas e contatos apenas para se ter algo no dispositivo...
-        musicas.add("Blackened");
-        artistas.add("Metallica");
-        albuns.add("... And Justice For All");
+    private void coletarInformacoesDono() {
+        Scanner scanner = new Scanner(System.in);
 
-        contatos.add("João - 123456789");
-        contatos.add("Maria - 987654321");
+        printHeader("Configuração Inicial do iPhone");
+
+        System.out.println("Por favor, forneça as informações do proprietário do iPhone:\n");
+
+        System.out.print("Nome do proprietário: ");
+        setDono(scanner.nextLine());
+
+        System.out.print("Endereço: ");
+        setEndereco(scanner.nextLine());
+
+        System.out.print("E-mail: ");
+        setEmail(scanner.nextLine());
+
+        System.out.print("Documento: ");
+        setDocumento(scanner.nextLine());
+
+        System.out.println("\nInformações do proprietário registradas com sucesso!");
+        pressEnterToContinue(scanner);
     }
 
     public static void main(String[] args) {
-        iPhone1 iphone1Instance = new iPhone1();
-        iphone1Instance.iphone1.exibirDadosPessoais();
+        iPhone1 iphone = new iPhone1();
+        iphone.runMainMenu();
+    }
 
+    private void runMainMenu() {
         Scanner scanner = new Scanner(System.in);
-        int command = 0;
+        while (true) {
+            printHeader("Menu Principal");
+            System.out.println("1. Música");
+            System.out.println("2. Telefone");
+            System.out.println("3. Internet");
+            System.out.println("4. Exibir Dados do Proprietário");
+            System.out.println("5. Sair");
+            System.out.print("\nEscolha uma opção: ");
 
-        do {
-            System.out.println("Selecione a opção desejada:\n" +
-                    "[ 1 ] = Musica\n" +
-                    "[ 2 ] = Telefonar\n" +
-                    "[ 3 ] = Navegar\n" +
-                    "[ 4 ] = Sair:\n");
+            int choice = getValidIntInput(scanner, 1, 5);
 
-            command = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (command) {
+            switch (choice) {
                 case 1:
-                    System.out.println("Informe a opção desejada: \n" +
-                            "[ 1 ] - Selecionar Música\n" +
-                            "[ 2 ] - Tocar Música Selecionada\n" +
-                            "[ 3 ] - Pausar Música\n" +
-                            "[ 4 ] - Adicionar Música\n");
-                    int musicaCommand = scanner.nextInt();
-                    switch (musicaCommand) {
-                        case 1:
-                            iphone1Instance.exibirMusicas();
-                            System.out.println("Digite o número da música que deseja tocar:");
-                            int index = scanner.nextInt();
-                            scanner.nextLine();  // Consumir nova linha
-                            iphone1Instance.selecionarMusica(index - 1);
-                            break;
-                        case 2:
-                            iphone1Instance.tocar();
-                            break;
-                        case 3:
-                            iphone1Instance.pausar();
-                            break;
-                        case 4:
-                            System.out.println("Digite o nome da música:");
-                            scanner.nextLine();  // Consumir nova linha
-                            String novaMusica = scanner.nextLine();
-                            System.out.println("Digite o nome do artista:");
-                            String novoArtista = scanner.nextLine();
-                            System.out.println("Digite o nome do álbum:");
-                            String novoAlbum = scanner.nextLine();
-                            iphone1Instance.adicionarMusica(novaMusica, novoArtista, novoAlbum);
-                            break;
-                        default:
-                            System.out.println("Opção inválida!");
-                    }
+                    handleMusicMenu(scanner);
                     break;
-
                 case 2:
-                    System.out.println("Informe a opção desejada:\n" +
-                            "[ 1 ] = Ligar\n" +
-                            "[ 2 ] = Atender\n" +
-                            "[ 3 ] = Correio Eletrônico\n" +
-                            "[ 4 ] = Adicionar Contato\n" +
-                            "[ 5 ] = Ver lista de Contatos\n");
-
-                    int telefonarCommand = scanner.nextInt();
-                    switch (telefonarCommand) {
-                        case 1:
-                            iphone1Instance.ligar();
-                            break;
-                        case 2:
-                            iphone1Instance.atender();
-                            break;
-                        case 3:
-                            iphone1Instance.iniciarCorreioVoz();
-                            break;
-                        case 4:
-                            System.out.println("Digite o nome do contato:");
-                            scanner.nextLine();  // Consumir nova linha
-                            String nomeContato = scanner.nextLine();
-                            System.out.println("Digite o número do contato:");
-                            String numeroContato = scanner.nextLine();
-                            iphone1Instance.inserirNovoContato(nomeContato + " - " + numeroContato);
-                            break;
-                        case 5:
-                            iphone1Instance.exibirContatos();
-                            System.out.println("Digite o número do contato que deseja ligar:");
-                            int contatoIndex = scanner.nextInt();
-                            scanner.nextLine();  // Consumir nova linha
-                            iphone1Instance.selecionarContato(contatoIndex - 1);
-                            break;
-                        default:
-                            System.out.println("Opção inválida!");
-                    }
+                    handlePhoneMenu(scanner);
                     break;
-
                 case 3:
-                    System.out.println("Informe a opção desejada:\n" +
-                            "[ 1 ] = Exibir\n" +
-                            "[ 2 ] = Nova Aba\n" +
-                            "[ 3 ] = Atualizar Página\n");
-                    int navegarCommand = scanner.nextInt();
-                    switch (navegarCommand) {
-                        case 1:
-                            System.out.println("Digite o URL da página:");
-                            scanner.nextLine();  // Consumir nova linha
-                            String url = scanner.nextLine();
-                            iphone1Instance.exibirPagina(url);
-                            break;
-                        case 2:
-                            System.out.println("Digite o URL da nova aba:");
-                            scanner.nextLine();  // Consumir nova linha
-                            String novaAbaUrl = scanner.nextLine();
-                            iphone1Instance.adicionarNovaAba(novaAbaUrl);
-                            break;
-                        case 3:
-                            iphone1Instance.atualizarPagina();
-                            break;
-                        default:
-                            System.out.println("Opção inválida!");
-                    }
+                    handleInternetMenu(scanner);
                     break;
-
                 case 4:
-                    System.out.println("Encerrando o programa.");
+                    exibirDadosPessoais();
+                    pressEnterToContinue(scanner);
                     break;
-
-                default:
-                    System.out.println("Opção inválida.");
+                case 5:
+                    System.out.println("\nSaindo...");
+                    scanner.close();
+                    return;
             }
-        } while (command != 4);
-
-        scanner.close();
+        }
     }
 
-    @Override
-    public void reprodutorMusical() {
-        System.out.println("Artista: " + iphone1.getArtista());
-        System.out.println("Música: " + iphone1.getMusica());
-        System.out.println("Álbum: " + iphone1.getAlbum());
-        System.out.println();
+    private void handleMusicMenu(Scanner scanner) {
+        while (true) {
+            printHeader("Menu de Música");
+            System.out.println("1. Ver lista de Músicas");
+            System.out.println("2. Adicionar Músicas a lista");
+            System.out.println("3. Pausar Música");
+            System.out.println("4. Parar Música");
+            System.out.println("5. Voltar ao Menu Principal");
+            System.out.print("\nEscolha uma opção: ");
+
+            int choice = getValidIntInput(scanner, 1, 5);
+
+            switch (choice) {
+                case 1:
+                    handleMusicListMenu(scanner);
+                    break;
+                case 2:
+                    adicionarNovaMusica(scanner);
+                    break;
+                case 3:
+                    pausar();
+                    pressEnterToContinue(scanner);
+                    break;
+                case 4:
+                    pararMusica();
+                    pressEnterToContinue(scanner);
+                    break;
+                case 5:
+                    return;
+            }
+        }
     }
 
+    private void handleMusicListMenu(Scanner scanner) {
+        if (musicas.isEmpty()) {
+            System.out.println("\nNão há músicas disponíveis.");
+            pressEnterToContinue(scanner);
+            return;
+        }
+        printHeader("Lista de Músicas");
+        for (int i = 0; i < musicas.size(); i++) {
+            System.out.println((i + 1) + ". " + musicas.get(i) + " - " + artistas.get(i));
+        }
+        System.out.println((musicas.size() + 1) + ". Voltar");
+        System.out.print("\nEscolha uma opção: ");
+
+        int choice = getValidIntInput(scanner, 1, musicas.size() + 1);
+
+        if (choice <= musicas.size()) {
+            selecionarMusica(choice - 1);
+            tocar();
+            pressEnterToContinue(scanner);
+        }
+    }
+
+    private void handlePhoneMenu(Scanner scanner) {
+        while (true) {
+            printHeader("Menu de Telefone");
+            System.out.println("1. Ver Contatos");
+            System.out.println("2. Adicionar Contato");
+            System.out.println("3. Correio de Voz");
+            System.out.println("4. Voltar ao Menu Principal");
+            System.out.print("\nEscolha uma opção: ");
+
+            int choice = getValidIntInput(scanner, 1, 4);
+
+            switch (choice) {
+                case 1:
+                    handleContactListMenu(scanner);
+                    break;
+                case 2:
+                    adicionarNovoContato(scanner);
+                    break;
+                case 3:
+                    iniciarCorreioVoz();
+                    pressEnterToContinue(scanner);
+                    break;
+                case 4:
+                    return;
+            }
+        }
+    }
+
+    private void handleContactListMenu(Scanner scanner) {
+        if (contatos.isEmpty()) {
+            System.out.println("\nNão há contatos na lista.");
+            pressEnterToContinue(scanner);
+            return;
+        }
+
+        printHeader("Lista de Contatos");
+        exibirContatos();
+
+        System.out.println((contatos.size() + 1) + ". Voltar");
+        System.out.print("\nEscolha um contato (ou voltar): ");
+
+        int choice = getValidIntInput(scanner, 1, contatos.size() + 1);
+
+        if (choice <= contatos.size()) {
+            handleContactOptions(scanner, choice - 1);
+        }
+    }
+
+    private void handleContactOptions(Scanner scanner, int contactIndex) {
+        while (true) {
+            printHeader("Opções para o contato: " + contatos.get(contactIndex));
+            System.out.println("1. Ligar");
+            System.out.println("2. Editar contato");
+            System.out.println("3. Excluir contato");
+            System.out.println("4. Voltar");
+            System.out.print("\nEscolha uma opção: ");
+
+            int choice = getValidIntInput(scanner, 1, 4);
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\nLigando para " + contatos.get(contactIndex));
+                    ligar();
+                    pressEnterToContinue(scanner);
+                    return;
+                case 2:
+                    editarContato(scanner, contactIndex);
+                    return;
+                case 3:
+                    excluirContato(scanner, contactIndex);
+                    return;
+                case 4:
+                    return;
+            }
+        }
+    }
+
+    private void editarContato(Scanner scanner, int index) {
+        printHeader("Editando contato: " + contatos.get(index));
+        System.out.print("Digite o novo nome do contato: ");
+        String novoNome = scanner.nextLine();
+        System.out.print("Digite o novo número do contato: ");
+        String novoNumero = scanner.nextLine();
+        contatos.set(index, novoNome + " - " + novoNumero);
+        System.out.println("\nContato atualizado com sucesso!");
+        pressEnterToContinue(scanner);
+    }
+
+    private void excluirContato(Scanner scanner, int index) {
+        System.out.println("\nTem certeza que deseja excluir o contato: " + contatos.get(index) + "? (S/N)");
+        String confirmacao = scanner.nextLine().trim().toLowerCase();
+        if (confirmacao.equals("s")) {
+            String contatoRemovido = contatos.remove(index);
+            System.out.println("Contato removido: " + contatoRemovido);
+        } else {
+            System.out.println("Operação de exclusão cancelada.");
+        }
+        pressEnterToContinue(scanner);
+    }
+
+    private void handleInternetMenu(Scanner scanner) {
+        while (true) {
+            printHeader("Menu de Internet");
+            System.out.println("1. Exibir Página");
+            System.out.println("2. Adicionar Nova Aba");
+            System.out.println("3. Atualizar Página");
+            System.out.println("4. Voltar ao Menu Principal");
+            System.out.print("\nEscolha uma opção: ");
+
+            int choice = getValidIntInput(scanner, 1, 4);
+
+            switch (choice) {
+                case 1:
+                    System.out.print("\nDigite a URL: ");
+                    exibirPagina(scanner.nextLine());
+                    pressEnterToContinue(scanner);
+                    break;
+                case 2:
+                    System.out.print("\nDigite a URL para a nova aba: ");
+                    adicionarNovaAba(scanner.nextLine());
+                    pressEnterToContinue(scanner);
+                    break;
+                case 3:
+                    atualizarPagina();
+                    pressEnterToContinue(scanner);
+                    break;
+                case 4:
+                    return;
+            }
+        }
+    }
+
+    private int getValidIntInput(Scanner scanner, int min, int max) {
+        while (true) {
+            try {
+                int input = Integer.parseInt(scanner.nextLine());
+                if (input >= min && input <= max) {
+                    return input;
+                }
+                System.out.println("Por favor, digite um número entre " + min + " e " + max);
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, digite um número.");
+            }
+        }
+    }
+
+    // Métodos de Música
     @Override
     public void tocar() {
-        System.out.println("Tocando a música: " + iphone1.getMusica() + " do artista " + iphone1.getArtista() + " no álbum " + iphone1.getAlbum());
-        System.out.println();
+        if (!musicaAtual.isEmpty()) {
+            tocando = true;
+            System.out.println("\nTocando: " + musicaAtual);
+        } else {
+            System.out.println("\nNenhuma música selecionada.");
+        }
     }
 
     @Override
     public void pausar() {
-        System.out.println("Música pausada.");
-        System.out.println();
-    }
-
-    @Override
-    public void selecionarMusica(int index) {
-        iphone1.setMusica(musicas.get(index));
-        iphone1.setArtista(artistas.get(index));
-        iphone1.setAlbum(albuns.get(index));
-        System.out.println("Música selecionada: " + iphone1.getMusica() + " do artista " + iphone1.getArtista() + " no álbum " + iphone1.getAlbum());
-        tocar();
-        System.out.println();
-    }
-
-    public void exibirMusicas() {
-        System.out.println("Músicas disponíveis:");
-        for (int i = 0; i < musicas.size(); i++) {
-            System.out.println((i + 1) + ". " + musicas.get(i) + " - " + artistas.get(i) + " (" + albuns.get(i) + ")");
-            System.out.println();
+        if (tocando) {
+            tocando = false;
+            System.out.println("\nMúsica pausada: " + musicaAtual);
+        } else {
+            System.out.println("\nNenhuma música está tocando.");
         }
     }
 
-    public void adicionarMusica(String musica, String artista, String album) {
+    private void pararMusica() {
+        if (tocando || !musicaAtual.isEmpty()) {
+            tocando = false;
+            musicaAtual = "";
+            System.out.println("\nMúsica parada.");
+        } else {
+            System.out.println("\nNenhuma música está tocando.");
+        }
+    }
+
+    @Override
+    public void selecionarMusica(int indice) {
+        if (indice >= 0 && indice < musicas.size()) {
+            musicaAtual = musicas.get(indice) + " - " + artistas.get(indice);
+            System.out.println("\nMúsica selecionada: " + musicaAtual);
+        } else {
+            System.out.println("\nÍndice de música inválido.");
+        }
+    }
+
+    private void adicionarNovaMusica(Scanner scanner) {
+        printHeader("Adicionar Nova Música");
+        System.out.print("Digite o nome da música: ");
+        String musica = scanner.nextLine();
+        System.out.print("Digite o nome do artista: ");
+        String artista = scanner.nextLine();
+        System.out.print("Digite o nome do álbum: ");
+        String album = scanner.nextLine();
+        adicionarMusica(musica, artista, album);
+        pressEnterToContinue(scanner);
+    }
+
+    private void adicionarMusica(String musica, String artista, String album) {
         musicas.add(musica);
         artistas.add(artista);
         albuns.add(album);
-        System.out.println("Nova música adicionada: " + musica + " do artista " + artista + " no álbum " + album);
-        System.out.println();
+        System.out.println("\nMúsica adicionada: " + musica + " - " + artista);
     }
 
-    public void exibirContatos() {
-        System.out.println("Contatos disponíveis:");
-        for (int i = 0; i < contatos.size(); i++) {
-            System.out.println((i + 1) + ". " + contatos.get(i));
-            System.out.println();
-        }
-    }
-
-    public void inserirNovoContato(String novoContato) {
-        contatos.add(novoContato);
-        System.out.println("Novo contato inserido: " + novoContato);
-        System.out.println();
-    }
-
-    public void selecionarContato(int index) {
-        iphone1.setContato(contatos.get(index));
-        System.out.println("Ligando para " + iphone1.getContato() + "...");
-        System.out.println();
-    }
-
+    // Métodos de Telefone
     @Override
     public void ligar() {
-        System.out.println("Chamando " + iphone1.getContato() + "...");
-        System.out.println();
+        if (!emChamada) {
+            System.out.print("Digite o número para ligar: ");
+            Scanner scanner = new Scanner(System.in);
+            String numero = scanner.nextLine();
+            System.out.println("\nLigando para " + numero + "...");
+            emChamada = true;
+        } else {
+            System.out.println("\nJá está em uma chamada.");
+        }
     }
 
     @Override
     public void atender() {
-        System.out.println("Atendendo a chamada.");
-        System.out.println();
+        if (!emChamada) {
+            emChamada = true;
+            System.out.println("\nChamada atendida.");
+        } else {
+            System.out.println("\nJá está em uma chamada.");
+        }
     }
 
     @Override
     public void iniciarCorreioVoz() {
-        System.out.println("Iniciando correio de voz.");
-        System.out.println();
+        System.out.println("\nIniciando correio de voz...");
     }
 
-    @Override
-    public void navegadarInternet() {
-
+    private void adicionarNovoContato(Scanner scanner) {
+        printHeader("Adicionar Novo Contato");
+        System.out.print("Digite o nome do contato: ");
+        String nome = scanner.nextLine();
+        System.out.print("Digite o número do contato: ");
+        String numero = scanner.nextLine();
+        adicionarContato(nome, numero);
+        pressEnterToContinue(scanner);
     }
 
+    private void adicionarContato(String nome, String numero) {
+        contatos.add(nome + " - " + numero);
+        System.out.println("\nContato adicionado: " + nome);
+    }
+
+    private void exibirContatos() {
+        if (contatos.isEmpty()) {
+            System.out.println("Não há contatos na lista.");
+        } else {
+            for (int i = 0; i < contatos.size(); i++) {
+                System.out.println((i + 1) + ". " + contatos.get(i));
+            }
+        }
+    }
+
+    // Métodos de Internet
     @Override
     public void exibirPagina(String url) {
-        System.out.println("Exibindo página: " + url);
-        System.out.println();
+        paginaAtual = url;
+        System.out.println("\nExibindo página: " + url);
     }
 
     @Override
     public void adicionarNovaAba(String url) {
-        System.out.println("Adicionando nova aba com a página: " + url);
-        System.out.println();
+        System.out.println("\nNova aba aberta com a página: " + url);
     }
 
     @Override
     public void atualizarPagina() {
-        System.out.println("Atualizando página.");
-        System.out.println();
+        if (!paginaAtual.isEmpty()) {
+            System.out.println("\nAtualizando página: " + paginaAtual);
+        } else {
+            System.out.println("\nNenhuma página aberta para atualizar.");
+        }
+    }
+
+    // Métodos auxiliares para melhorar a apresentação no console
+    private void printHeader(String title) {
+        System.out.println("\n" + "=".repeat(50));
+        System.out.println(" ".repeat((50 - title.length()) / 2) + title);
+        System.out.println("=".repeat(50) + "\n");
+    }
+
+    private void pressEnterToContinue(Scanner scanner) {
+        System.out.println("\nPressione Enter para continuar...");
+        scanner.nextLine();
+    }
+
+    // Método para exibir dados pessoais
+    @Override
+    public void exibirDadosPessoais() {
+        printHeader("Dados do Proprietário do iPhone");
+        System.out.println("Nome: " + getDono());
+        System.out.println("Endereço: " + getEndereco());
+        System.out.println("E-mail: " + getEmail());
+        System.out.println("Documento: " + getDocumento());
     }
 }
